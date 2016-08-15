@@ -198,241 +198,315 @@ ints = [];
 number  = sumFirstPenultimate(ints);
 console.log("sumFirstPenultimate(%s) -> %s", ints, number);
 
-/*
+
 // Modify and return the given HashMap as follows: if the key "a" has a value,
 // set the key "b" to have that value, and set the key "a" to have the value "".
 // Basically "b" is a bully, taking the value of "a".
-function mapBully(hash) {
-    if (hash.hasOwnProperty("a")) {
-        if (hash.hasOwnProperty("b")) {
-            hash.set("b", hash.get("a"));
-            hash.set("a", "");
-        } else {
-            hash.put("b", hash.get("a"));
-            hash.set("a", "");
-        }
+// **** Implemented with Map()
+function mapBullyMap(hash) {
+    //var newHash = new Map();
+    var newHash = hash;
+
+    if (newHash.has("a")) {
+        newHash.set("b", hash.get("a"));
+        newHash.set("a", "");
     }
-    return hash;
+    if (newHash.has("c")) {
+        newHash.delete("c");
+    }
+
+
+    return newHash;
 }
 
-function printHash(hash) {
-    var buffer = ""
-    for (var x in hash)
-    {
-        buffer = buffer + "{"+ x + hash[x] + "}";
-    }
+//mapBullyMap({"b": "dirt", "a": "candy"}) -> {"b": "candy", "a": ""}
+//mapBullyMap({"a": "candy"}) -> {"b": "candy", "a": ""}
+//mapBullyMap({"b": "carrot", "c": "meh", "a": "candy"}) -> {"b": "candy", "c": "meh", "a": ""}
+console.log("\n\n");
+var hashMap = new Map();
+hashMap.set("b", "dirt");
+hashMap.set("a", "candy");
+console.log("mapBullyMap(", hashMap, ") -> ");
+var newHash = mapBullyMap(hashMap);
+console.log(newHash);
+hashMap.clear();
+hashMap.set("a", "candy");
+console.log("mapBullyMap(", hashMap, ") -> ");
+newHash = mapBullyMap(hashMap);
+console.log(newHash);
+hashMap.set("b", "carrot");
+hashMap.set("a", "candy");
+hashMap.set("c", "meh");
+console.log("mapBullyMap(", hashMap, ") -> ");
+newHash = mapBullyMap(hashMap);
+console.log(newHash);
+hashMap.set("a", "");
+hashMap.set("c", "meh");
+hashMap.set("b", "carrot");
+console.log("mapBullyMap(", hashMap, ") -> ");
+newHash = mapBullyMap(hashMap);
+console.log(newHash);
+hashMap.set("a", "candy");
+hashMap.set("c", "meh");
+hashMap.set("b", "carrot");
+hashMap.set("d", "cars");
+console.log("mapBullyMap(", hashMap, ") -> ");
+newHash = mapBullyMap(hashMap);
+console.log(newHash);
+hashMap.set("c", "meh");
+hashMap.set("b", "carrot");
+console.log("mapBullyMap(", hashMap, ") -> ");
+newHash = mapBullyMap(hashMap);
+console.log(newHash);
 
-    return buffer;
+// Modify and return the given HashMap as follows: if the key "a" has a value,
+// set the key "b" to have that value, and set the key "a" to have the value "".
+// Basically "b" is a bully, taking the value of "a".
+// **** Implemented with {}
+function mapBully(hash) {
+    var newHash = hash;
+
+    if (newHash.hasOwnProperty("a")) {
+        newHash.b = newHash.a;
+        newHash.a = ""
+    }
+    if (newHash.hasOwnProperty("c")) {
+        delete newHash.c;
+    }
+    return newHash;
 }
 
 //mapBully({"b": "dirt", "a": "candy"}) -> {"b": "candy", "a": ""}
 //mapBully({"a": "candy"}) -> {"b": "candy", "a": ""}
 //mapBully({"b": "carrot", "c": "meh", "a": "candy"}) -> {"b": "candy", "c": "meh", "a": ""}
 console.log("\n\n");
-var hash = new Map();
-hash.set("b", "dirt");
-hash.set("a", "candy");
-console.log("mapBully(%s) -> ", printHash(hash));
+var hash = {"b": "dirt", "a": "candy"};
+console.log("mapBully(", hash, ") -> ");
 var newHash = mapBully(hash);
-console.log("%s", newHash.toString());
-var hash = new Map();
-hash.set("a", "candy");
-console.log("mapBully(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"a": "candy"};
+console.log("mapBully(", hash, ") -> ");
 newHash = mapBully(hash);
-console.log("%s", newHash.toString());
-hash.set("b", "carrot");
-hash.set("a", "candy");
-hash.set("c", "meh");
-console.log("mapBully(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "a": "candy", "c": "meh"};
+console.log("mapBully(", hash, ") -> ");
 newHash = mapBully(hash);
-console.log("%s", newHash.toString());
-hash.set("a", "");
-hash.set("c", "meh");
-hash.set("b", "carrot");
-console.log("mapBully(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "a": "", "c": "meh"};
+console.log("mapBully(", hash, ") -> ");
 newHash = mapBully(hash);
-console.log("%s", newHash.toString());
-hash.set("a", "candy");
-hash.set("c", "meh");
-hash.set("b", "carrot");
-hash.set("d", "cars");
-console.log("mapBully(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "a": "candy", "c": "meh", "d": "cars"};
+console.log("mapBully(", hash, ") -> ");
 newHash = mapBully(hash);
-console.log("%s", newHash.toString());
-hash.set("c", "meh");
-hash.set("b", "carrot");
-console.log("mapBully(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "c": "meh"};
+console.log("mapBully(", hash, ") -> ");
 newHash = mapBully(hash);
-console.log("%s", newHash.toString());
+console.log(newHash);
 
-/*
+
+// Modify and return the given HashMap as follows: if the key "a" has a value,
+// set the key "b" to have that same value. In all cases remove the key "c",
+// leaving the rest of the map unchanged.
+function mapShare(hash) {
+    if (hash.hasOwnProperty("a")) {
+        hash.b = hash.a;
+    }
+
+    if (hash.hasOwnProperty("c")) {
+        delete hash.c;
+    }
+    return hash;
+}
+
+
 //mapShare({"b": "bbb", "c": "ccc", "a": "aaa"}) -> {"b": "aaa", "a": "aaa"}
 //mapShare({"b": "xyz", "c": "ccc"}) -> {"b": "xyz"}
 //mapShare({"d": "hi", "c": "meh", "a": "aaa"}) -> {"d": "hi", "b": "aaa", "a": "aaa"}
 console.log("\n\n");
-hash.put("b", "bbb");
-hash.put("a", "aaa");
-hash.put("c", "ccc");
-console.log("mapShare(%s) -> ", hash.toString());
+hash = {"b": "bbb", "a": "aaa", "c": "ccc"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("b", "xyz");
-hash.put("c", "ccc");
-console.log("mapShare(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "xyz", "c": "ccc"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("a", "aaa");
-hash.put("c", "meh");
-hash.put("d", "hi");
-console.log("mapShare(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"a": "aaa", "c": "meh", "d": "hi"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("a", "");
-hash.put("c", "meh");
-hash.put("b", "carrot");
-console.log("mapShare(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"a": "", "b": "carrot", "c": "meh"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("a", "candy");
-hash.put("c", "meh");
-hash.put("b", "carrot");
-hash.put("d", "cars");
-console.log("mapShare(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "c": "meh", "d": "cars"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("c", "meh");
-hash.put("b", "carrot");
-console.log("mapShare(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "carrot", "c": "meh"};
+console.log("mapShare(", hash, ") -> ");
 newHash = mapShare(hash);
-console.log("%s", newHash.toString());
+console.log(newHash);
+
+// Modify and return the given HashMap as follows: for this problem the HashMap
+// may or may not contain the "a" and "b" keys. If both keys are present,
+// append their 2 string values together and store the result under the key "ab".
+function mapAB(hash) {
+    if (hash.hasOwnProperty("a")) {
+        if (hash.hasOwnProperty("b")) {
+            hash.ab = hash.a + hash.b;
+        }
+    }
+    return hash;
+}
 
 // mapAB({"b": "There", "a": "Hi"}) -> {"b": "There", "a": "Hi", "ab": "HiThere"}
 // mapAB({"a": "Hi"}) -> {"a": "Hi"}
 // mapAB({"b": "There"}) -> {"b": "There"}
 console.log("\n\n");
-hash = [];
-hash.put("b", "There");
-hash.put("a", "Hi");
-console.log("mapAB(%s) -> ", hash.toString());
+hash = {"b": "There", "a": "Hi"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("a", "Hi");
-console.log("mapAB(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"a": "Hi"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("b", "There");
-console.log("mapAB(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "There"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("b", "There");
-hash.put("a", "Hi");
-hash.put("c", "Play");
-console.log("mapAB(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "There", "a": "Hi", "c": "Play"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("b", " - ");
-hash.put("a", "Hi");
-console.log("mapAB(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "", "a": "Hi"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
-hash = [];
-hash.put("b", "There");
-hash.put("d", "Hi");
-console.log("mapAB(%s) -> ", hash.toString());
+console.log(newHash);
+hash = {"b": "There", "d": "Hi"};
+console.log("mapAB(", hash, ") -> ");
 newHash = mapAB(hash);
-console.log("%s", newHash.toString());
+console.log(newHash);
+
+// Given an ArrayList of strings, return a HashMap containing a key for every
+// different string in the ArrayList, and the value is that string's length.
+function wordLen(wordList) {
+    var hash = {};
+
+    for (var i = 0; i < wordList.length; i++){
+        if (!(hash.hasOwnProperty(wordList[i]))) {
+            hash[wordList[i]] = wordList[i].length;
+        }
+    }
+    return hash;
+}
+
+
+//function logMapElements(value, key, map) {
+//    console.log("m[" + key + "] = " + value);
+//}
+//new Map([["foo", 3], ["bar", {}], ["baz", undefined]]).forEach(logMapElements);
+// logs:
+// "m[foo] = 3"
+// "m[bar] = [object Object]"
+// "m[baz] = undefined"
+
 
 // wordLen(["a", "bb", "a", "bb"]) -> {"a": 1, "bb": 2}
 // wordLen(["this", "and", "that", "and"]) -> {"that": 4, "this": 4, "and": 3}
 // wordLen(["code", "code", "code", "bug"]) -> {"bug": 3, "code": 4}
 console.log("\n\n");
-ArrayList<String> wordList = new ArrayList<>();
-wordList.add("a", "bb", "a", "bb"));
-console.log("wordLen(%s) -> ", wordList.toString());
+var wordList = ["a", "bb", "a", "bb"];
+console.log("wordLen(", wordList, ") -> ");
 newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
+console.log(newHash);
+wordList = ["this", "and", "that", "and"];
+console.log("wordLen(", wordList, ") -> ");
+newHash = wordLen(wordList);
+console.log(newHash);
+wordList = ["code", "code", "code", "bug"];
+console.log("wordLen(", wordList, ") -> ");
+newHash = wordLen(wordList);
+console.log(newHash);
+wordList = ["this", "and", "that", "sand castle", "pork"];
+console.log("wordLen(", wordList, ") -> ");
+newHash = wordLen(wordList);
+console.log(newHash);
+wordList = ["science", "mathematics", "engineering", "english"];
+console.log("wordLen(", wordList, ") -> ");
+newHash = wordLen(wordList);
+console.log(newHash);
 wordList = [];
-wordList.add("this", "and", "that", "and"));
-console.log("wordLen(%s) -> ", wordList.toString());
+console.log("wordLen(", wordList, ") -> ");
 newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
-wordList = [];
-wordList.add("code", "code", "code", "bug"));
-console.log("wordLen(%s) -> ", wordList.toString());
-newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
-wordList = [];
-wordList.add("this", "and", "that", "sand castle", "pork"));
-console.log("wordLen(%s) -> ", wordList.toString());
-newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
-wordList = [];
-wordList.add("science", "mathematics", "engineering", "english"));
-console.log("wordLen(%s) -> ", wordList.toString());
-newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
-wordList = [];
-console.log("wordLen(%s) -> ", wordList.toString());
-newHash = wordLen(wordList);
-console.log("%s", newHash.toString());
+console.log(newHash);
+
 
 // indexWords(["aardvark", "apple", "zamboni", "phone"]) -> {"a": ["aardvark", "apple"], "p": ["phone"], "z": ["zamboni"]}
 // indexWords(["elephant"]) -> {"e": ["elephant"]}
 // indexWords([]) -> {}
 // indexWords([""]) -> {}
+
+// Given an ArrayList of words, return a HashMap> containing a keys for every
+// word's first letter. The value for the key will be an ArrayList of all
+// words in the list that start with that letter. An empty string has no first
+// letter so don't add a key for it.
+function indexWords(wordList) {
+    var hash = {};
+    var list = [];
+    var index;
+
+    for (var i = 0; i < wordList.length; i++) {
+        if (wordList[i].length != 0) {
+            index = wordList[i].substring(0, 1);
+
+            if (hash.hasOwnProperty(index)) {
+                list = hash[index];
+                list.push(wordList[i]);
+            } else {
+                list = [wordList[i]];
+                hash[index] = list;
+            }
+        }
+    }
+    return hash;
+}
 console.log("\n\n");
-wordList = [];
-wordList.add("aardvark", "apple", "zamboni", "phone"));
+wordList = ["aardvark", "apple", "zamboni", "phone"];
 console.log("indexWords(%s) -> ", wordList.toString());
-HashMap<String, ArrayList<String>> indexHash;
-indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-wordList = [];
-wordList.add("elephant");
+var indexHash = indexWords(wordList);
+console.log(indexHash);
+wordList = ["elephant"];
 console.log("indexWords(%s) -> ", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
+console.log(indexHash);
 wordList = [];
 console.log("indexWords(%s) -> ", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-wordList = [];
-wordList.add("");
+console.log(indexHash);
+wordList = [""];
 console.log("indexWords(%s) -> ", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-wordList = [];
-wordList.add("presystematic", "pleione", "senatorship", "parietes", "bimane",
+console.log(indexHash);
+wordList = ["presystematic", "pleione", "senatorship", "parietes", "bimane",
 "chivvying", "halafian", "carat", "unallegorical", "clubman", "bisulphite", "preinvestigating",
-"marie", "theritas", "counterchanging"));
+"marie", "theritas", "counterchanging"];
 console.log("indexWords(%s) -> \n", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-wordList = [];
-wordList.add("superphysiposed", "kursk", "zophori", "replating", "meteoritic",
+console.log(indexHash);
+wordList = ["superphysiposed", "kursk", "zophori", "replating", "meteoritic",
 "finished", "talaria", "befogging", "cyclonal", "overpuissant", "unthematic",
 "realpolitik", "direct", "reincline", "preoblige", "nontanning", "cheeseboard",
-"slouchily", "useable", "pierre"));
+"slouchily", "useable", "pierre"];
 console.log("indexWords(%s) -> \n", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-wordList = [];
-wordList.add("Tiger", "Emu", "goat", "chicken", "penguin", "dog", "cat", "parakeet",
+console.log(indexHash);
+wordList = ["Tiger", "Emu", "goat", "chicken", "penguin", "dog", "cat", "parakeet",
 "mouse", "moose", "angel fish", "trout", "donkey", "horse", "mule", "stork", "crane", "coy",
-"panda", "rat", "raccoon", "ferret", "wolf", "fox", "mongoose", "merekat", "bandicoot"));
+"panda", "rat", "raccoon", "ferret", "wolf", "fox", "mongoose", "merekat", "bandicoot"];
 console.log("indexWords(%s) -> \n", wordList.toString());
 indexHash = indexWords(wordList);
-console.log("%s", indexHash.toString());
-*/
-/**
-* Created by chris on 8/13/16.
-*/
+console.log(indexHash);
